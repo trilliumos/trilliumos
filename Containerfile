@@ -2,22 +2,16 @@
 FROM scratch AS ctx
 COPY build_files /
 
-#FROM quay.io/centos-bootc/centos-bootc:stream10
-FROM quay.io/almalinuxorg/almalinux-bootc:10.1
+FROM quay.io/shaunassam/trillium-seed:latest
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build.sh && \
-    sed -i 's/#AutomaticUpdatePolicy.*/AutomaticUpdatePolicy=stage/' /etc/rpm-ostreed.conf && \
-    sed -i 's/#LockLayering.*/LockLayering=true/' /etc/rpm-ostreed.conf && \
-    rpm-ostree cleanup -m && \
-    ostree container commit 
+    sed -i 's/#AutomaticUpdatePolicy.*/AutomaticUpdatePolicy=stage/' /etc/rpm-ostreed.conf
 
-# Makes `/opt` writeable by default
-RUN rm -rf /opt && ln -s /var/opt /opt
-
+# Add Homebrew
 COPY --from=ghcr.io/ublue-os/brew:latest /system_files /
 RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \

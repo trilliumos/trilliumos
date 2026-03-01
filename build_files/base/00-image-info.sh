@@ -4,14 +4,14 @@ set -xeuo pipefail
 
 IMAGE_NAME="trilliumOS"
 IMAGE_PRETTY_NAME="trilliumOS"
-IMAGE_LIKE="AlmaLinux"
-HOME_URL="https://almalinux.org"
-DOCUMENTATION_URL="https://docs.alamlinux.org"
+IMAGE_LIKE="fedora"
+HOME_URL="https://github.com/trilliumos"
+DOCUMENTATION_URL="https://github.com/trilliumos"
 SUPPORT_URL="https://github.com/shaunassam/trilliumos/issues/"
 BUG_SUPPORT_URL="https://github.com/shaunassam/trilliumos/issues/"
 CODE_NAME="Jasper"
-VERSION="10.1"
-BASE_IMAGE_NAME="almalinux-bootc"
+VERSION="0.91-Beta"
+BASE_IMAGE_NAME="trillium-seed"
 
 #IMAGE_INFO="/usr/share/ublue-os/image-info.json"
 IMAGE_REF="quay.io/shaunassam/trilliumos"
@@ -24,7 +24,7 @@ sed -i "s|^HOME_URL=.*|HOME_URL=\"$HOME_URL\"|" /usr/lib/os-release
 sed -i "s|^DOCUMENTATION_URL=.*|DOCUMENTATION_URL=\"$DOCUMENTATION_URL\"|" /usr/lib/os-release
 sed -i "s|^SUPPORT_URL=.*|SUPPORT_URL=\"$SUPPORT_URL\"|" /usr/lib/os-release
 sed -i "s|^BUG_REPORT_URL=.*|BUG_REPORT_URL=\"$BUG_SUPPORT_URL\"|" /usr/lib/os-release
-sed -i "s|^CPE_NAME=\"cpe:/o:fedoraproject:fedora|CPE_NAME=\"cpe:/o:almalinux:${IMAGE_PRETTY_NAME,}|" /usr/lib/os-release
+sed -i "s|^CPE_NAME=\"cpe:/o:centos:centos|CPE_NAME=\"cpe:/o:centos:${IMAGE_PRETTY_NAME,}|" /usr/lib/os-release
 sed -i "s|^DEFAULT_HOSTNAME=.*|DEFAULT_HOSTNAME=\"${IMAGE_PRETTY_NAME,}\"|" /usr/lib/os-release
 sed -i "s|^ID=fedora|ID=${IMAGE_PRETTY_NAME,}\nID_LIKE=\"${IMAGE_LIKE}\"|" /usr/lib/os-release
 sed -i "/^REDHAT_BUGZILLA_PRODUCT=/d; /^REDHAT_BUGZILLA_PRODUCT_VERSION=/d; /^REDHAT_SUPPORT_PRODUCT=/d; /^REDHAT_SUPPORT_PRODUCT_VERSION=/d" /usr/lib/os-release

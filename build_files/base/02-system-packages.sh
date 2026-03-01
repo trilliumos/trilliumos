@@ -2,15 +2,19 @@
 
 ARCH=$(uname -m)
 
-# Install required packages for tuqueOS image
+# Install required packages for trilliumOS image
 dnf group install -y \
+    "Server with GUI" \
     "Dial-up Networking Support" \
     "Hardware Support" \
     "Anaconda tools" \
     "Core" \
     "Fonts" \
     "GNOME" \
+    "Guest Agents" \
     "Guest Desktop Agents" \
+    "System Tools" \
+    "Graphical Administration Tools" \
     "Input Methods" \
     "Multimedia" \
     "Common NetworkManager submodules" \
@@ -18,27 +22,11 @@ dnf group install -y \
     "Virtualization Hypervisor" \
     "Container Management" \
     "Printing Client" \
+    "Hardware Monitoring Utilities" \
     "Image based rpm-ostree support"
 
-    # "Guest Desktop Agents" \
-    # "Guest Agents" \
-    # "Multimedia" \
-    # "Graphical Administration Tools" \
-    # "System Tools" \
-    # "Server with GUI" \
-    # "Fonts" \
-    # "GNOME Server Defaults" \
-    # "GNOME" \
-    # "Graphical Administration Tools" \
-    # "Hardware Monitoring Utilities" \
-    # "Headless Management" \
-    # "Server product core" \
-    # "Core" \
-    # "Hardware Support" \
-    # "Common NetworkManager submodules" \
-    # "Standard" \
-
 dnf install -y \
+    btrfs-progs \
     gnome-tweaks \
     distrobox \
     vim-enhanced \
@@ -56,18 +44,23 @@ dnf install -y \
     gnome-shell-extension-dash-to-panel \
     gnome-shell-extension-appindicator \
     gnome-shell-extension-desktop-icons-ng \
-    gnome-shell-extension-arc-menu \
     gnome-shell-extension-gsconnect \
+    gnome-shell-extension-arcmenu \
+    gnome-shell-extension-blur-my-shell \
     dnf-bootc \
-    ostree
+    ostree \
+    rpm-ostree
 
 # Install Intel packages to optimize CPU & hardware
 if [[ $ARCH == "x86_64" || $ARCH == "amd64" ]]; then
     dnf install -y \
         microcode_ctl \
-        libva-intel-hybrid-driver \
+        libva-intel-media-driver \
         intel-gmmlib \
         intel-vsc-firmware
+else
+    dnf install -y widevine-installer \
+        chromium
 fi
 
 # Remove unwanted packages
@@ -77,10 +70,17 @@ dnf remove -y subscription-manager \
     firefox \
     firefox-langpacks \
     gnome-shell-extension-background-logo \
-    toolbox
+    toolbox \
+    papers \
+    gnome-calculator \
+    gnome-remote-desktop \
+    gnome-characters \
+    gnome-clocks \
+    baobab \
+    gnome-font-viewer
 
 # Replace distro-based logo with custom
-rpm --erase --nodeps almalinux-logos
+rpm --erase --nodeps centos-logos
 dnf -y install trilliumos-logos
 
 # Install nerd-fonts
@@ -88,3 +88,7 @@ dnf -y copr enable che/nerd-fonts "centos-stream-10-$(arch)"
 dnf -y copr disable che/nerd-fonts
 dnf -y --enablerepo "copr:copr.fedorainfracloud.org:che:nerd-fonts" install \
 	nerd-fonts
+
+# Version lock critical packages (i.e. kernel & gnome)
+dnf versionlock add kernel*6.18.0-65* \
+    gnome-shell-49.4*
