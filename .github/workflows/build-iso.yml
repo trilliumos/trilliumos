@@ -1,5 +1,5 @@
 ---
-name: Build tuqueOS ISO
+name: Build trilliumOS ISO
 
 on:
   workflow_dispatch:
@@ -66,7 +66,7 @@ jobs:
         id: build
         with:
           arch: x86_64
-          image_name: tuqueos-el
+          image_name: trilliumOS-el
           image_repo: ghcr.io/shaunassam
           image_tag: latest
           flatpak_remote_url: https://flathub.org/repo/flathub.flatpakrepo
@@ -74,22 +74,22 @@ jobs:
           flatpak_remote_refs: org.mozilla.firefox/x86_64/stable org.mozilla.Thunderbird/x86_64/stable com.mattjakeman.ExtensionManager com.ranfdev.DistroShelf/x86_64/stable app/org.gnome.Firmware/x86_64/stable app/com.github.tchx84.Flatseal/x86_64/stable
           variant: Server
           version: 42
-          iso_name: build/tuqueos-el.iso
+          iso_name: build/trilliumOS-el.iso
 
      # - name: Rename and Checksum ISO
         #run: |
           #mkdir -p output
-          #mv ${{ steps.build.outputs.iso_path }} output/tuqueos.iso
-          #(cd output && sha256sum tuqueos.iso | tee tuqueos.iso-CHECKSUM)
+          #mv ${{ steps.build.outputs.iso_path }} output/trilliumOS.iso
+          #(cd output && sha256sum trilliumOS.iso | tee trilliumOS.iso-CHECKSUM)
 
       - name: Upload ISOs and Checksum to Job Artifacts
         if: inputs.upload-to-s3 != true && github.event_name != 'pull_request'
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: tuqueos-el
+          name: trilliumOS-el
           path: |
-            build/tuqueos-el.iso
-            build/tuqueos-el.iso-CHECKSUM
+            build/trilliumOS-el.iso
+            build/trilliumOS-el.iso-CHECKSUM
           if-no-files-found: error
           retention-days: 3
           compression-level: 0
@@ -99,7 +99,7 @@ jobs:
       #   id: build
       #   uses: ublue-os/titanoboa@main
       #   with:
-      #     image-ref: ghcr.io/shaunassam/tuqueos-el:latest
+      #     image-ref: ghcr.io/shaunassam/trilliumOS-el:latest
       #     flatpaks-list: ${{ github.workspace }}/flatpaks/flatpaks.list
       #     hook-post-rootfs: ${{ github.workspace }}/iso_files/configure-el-iso-anaconda.sh
       #     kargs: ""
@@ -108,14 +108,14 @@ jobs:
       # - name: Rename and Checksum ISO
       #   run: |
       #     mkdir -p output
-      #     mv ${{ steps.build.outputs.iso-dest }} output/tuqueos-el.iso
-      #     (cd output && sha256sum tuqueos-el.iso | tee tuqueos-el.iso-CHECKSUM)
+      #     mv ${{ steps.build.outputs.iso-dest }} output/trilliumOS-el.iso
+      #     (cd output && sha256sum trilliumOS-el.iso | tee trilliumOS-el.iso-CHECKSUM)
 
       # - name: Upload ISOs and Checksum to Job Artifacts
       #   if: inputs.upload-to-s3 != true && github.event_name != 'pull_request'
       #   uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
       #   with:
-      #     name: tuqueos-el
+      #     name: trilliumOS-el
       #     path: output
       #     if-no-files-found: error
       #     retention-days: 3
