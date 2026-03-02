@@ -2,6 +2,8 @@
 
 set -eoux pipefail
 
+ARCH=$(uname -m)
+
 # Make /usr/local writeable
 mv /usr/local /var/usrlocal
 ln -s /var/usrlocal /usr/local
