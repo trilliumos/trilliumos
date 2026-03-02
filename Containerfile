@@ -9,7 +9,8 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build.sh && \
-    sed -i 's/#AutomaticUpdatePolicy.*/AutomaticUpdatePolicy=stage/' /etc/rpm-ostreed.conf
+    sed -i 's/#AutomaticUpdatePolicy.*/AutomaticUpdatePolicy=stage/' /etc/rpm-ostreed.conf && \
+    sed -i 's/#LockLayering.*/LockLayering=true/' /etc/rpm-ostreed.conf
 
 # Add Homebrew
 COPY --from=ghcr.io/ublue-os/brew:latest /system_files /
