@@ -17,7 +17,7 @@ flatpak install --system -y --noninteractive flathub \
     org.gnome.font-viewer \
     org.gnome.Loupe \
     org.gnome.Weather \
-    com.borgbase.Vorta \
+    org.gnome.World.PikaBackup \
     org.gnome.Chess \
     org.gnome.Sudoku \
     org.gnome.Firmware \
