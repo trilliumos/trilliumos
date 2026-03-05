@@ -47,8 +47,15 @@ dnf install -y \
     gnome-shell-extension-gsconnect \
     gnome-shell-extension-arcmenu \
     gnome-shell-extension-blur-my-shell \
+    chromium \
     dnf-bootc \
     ostree \
+    ostree-libs \
+    docker-cli \
+    bubblewrap \
+    xfsprogs \
+    zchunk-libs \
+    userspace-rcu \
     rpm-ostree
 
 # Install Intel packages to optimize CPU & hardware
@@ -59,8 +66,7 @@ if [[ $ARCH == "x86_64" || $ARCH == "amd64" ]]; then
         intel-gmmlib \
         intel-vsc-firmware
 else
-    dnf install -y widevine-installer \
-        chromium
+    dnf install -y widevine-installer
 fi
 
 # Remove unwanted packages
