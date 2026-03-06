@@ -56,6 +56,7 @@ dnf install -y \
     xfsprogs \
     zchunk-libs \
     userspace-rcu \
+    fastfetch \
     rpm-ostree
 
 # Install Intel packages to optimize CPU & hardware
