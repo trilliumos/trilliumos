@@ -3,7 +3,7 @@ FROM scratch AS ctx
 COPY build_files /
 
 #FROM quay.io/shaunassam/trillium-seed:latest
-FROM quay.io/centos-bootc/centos-bootc@sha256:b10c380afa6362d5015c5392f7c1c7dc4f23e4aec582dce1a6192ff244ee0479
+FROM quay.io/centos-bootc/centos-bootc:stream10
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
