@@ -66,15 +66,15 @@ jobs:
         id: build
         with:
           arch: x86_64
-          image_name: trilliumOS-el
-          image_repo: ghcr.io/shaunassam
+          image_name: trilliumos
+          image_repo: ghcr.io/trilliumos
           image_tag: latest
           flatpak_remote_url: https://flathub.org/repo/flathub.flatpakrepo
           flatpak_remote_name: flathub
-          flatpak_remote_refs: org.mozilla.firefox/x86_64/stable org.mozilla.Thunderbird/x86_64/stable com.mattjakeman.ExtensionManager com.ranfdev.DistroShelf/x86_64/stable app/org.gnome.Firmware/x86_64/stable app/com.github.tchx84.Flatseal/x86_64/stable
+          #flatpak_remote_refs: org.mozilla.firefox/x86_64/stable org.mozilla.Thunderbird/x86_64/stable com.mattjakeman.ExtensionManager com.ranfdev.DistroShelf/x86_64/stable app/org.gnome.Firmware/x86_64/stable app/com.github.tchx84.Flatseal/x86_64/stable
           variant: Server
           version: 42
-          iso_name: build/trilliumOS-el.iso
+          iso_name: build/trilliumos-stable.iso
 
      # - name: Rename and Checksum ISO
         #run: |
@@ -86,10 +86,10 @@ jobs:
         if: inputs.upload-to-s3 != true && github.event_name != 'pull_request'
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: trilliumOS-el
+          name: trilliumos
           path: |
-            build/trilliumOS-el.iso
-            build/trilliumOS-el.iso-CHECKSUM
+            build/trilliumos-stable.iso
+            build/trilliumos-stable.iso-CHECKSUM
           if-no-files-found: error
           retention-days: 3
           compression-level: 0

@@ -1,7 +1,7 @@
 [customizations.installer.kickstart]
 contents = """
 %post
-bootc switch --mutate-in-place --transport registry quay.io/shaunassam/trilliumos:latest
+bootc switch --mutate-in-place --transport registry ghcr.io/trilliumos/trilliumos:latest
 %end
 """
 
