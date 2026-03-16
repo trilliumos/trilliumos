@@ -3,8 +3,8 @@ FROM scratch AS ctx
 COPY build_files /
 
 #FROM quay.io/shaunassam/trillium-seed:latest
-#FROM quay.io/centos-bootc/centos-bootc:stream10
-FROM quay.io/almalinuxorg/almalinux-bootc@sha256:33cdd2cd472e007b7e14c8d534dec6dd80ca95096921cd18a9405a1b45c9e9cb
+FROM quay.io/centos-bootc/centos-bootc@sha256:9cd0c887ea4b114cf6eb4f2debe0ce91a556c9d0fd320c1759cbd1635c07a0ff
+#FROM quay.io/almalinuxorg/almalinux-bootc@sha256:33cdd2cd472e007b7e14c8d534dec6dd80ca95096921cd18a9405a1b45c9e9cb
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
