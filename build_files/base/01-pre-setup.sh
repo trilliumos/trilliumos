@@ -17,9 +17,33 @@ dnf install -y epel-release && \
 dnf config-manager --set-enabled crb && \
 dnf copr enable -y sassam/trilliumOS
 
-dnf update -y
-
 dnf install -y python3-dnf-plugin-versionlock
+
+# Kernel Swap - Install kernel
+
+KERNEL_NAME="kernel"
+
+# Remove existing kernel packages
+PKGS=( "${KERNEL_NAME}" "${KERNEL_NAME}-core" "${KERNEL_NAME}-modules" "${KERNEL_NAME}-modules-core" "${KERNEL_NAME}-modules-extra" "${KERNEL_NAME}-uki-virt" )
+for pkg in "${PKGS[@]}"; do
+  rpm --erase "$pkg" --nodeps || true
+done
+
+INSTALL_PKGS=( "${KERNEL_NAME}" "${KERNEL_NAME}-core" "${KERNEL_NAME}-modules" "${KERNEL_NAME}-modules-core" "${KERNEL_NAME}-modules-extra" "${KERNEL_NAME}-uki-virt" "${KERNEL_NAME}-devel" "${KERNEL_NAME}-devel-matched" )
+
+for instpkg in "${INSTALL_PKGS[@]}"; do
+  dnf -y install "$instpkg"
+done
+
+# /*
+### Version Lock kernel packages
+# */
+dnf versionlock add \
+  "$KERNEL_NAME" \
+  "$KERNEL_NAME"-core \
+  "$KERNEL_NAME"-modules \
+  "$KERNEL_NAME"-modules-core \
+  "$KERNEL_NAME"-modules-extra
 
 #### FUTURE TODO - SETUP SECUREBOOT ####
 # Add akmods secureboot key

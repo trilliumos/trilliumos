@@ -216,7 +216,6 @@ disabled-extensions=@as []
 enabled-extensions=['ding@rastersoft.com', 'gsconnect@andyholmes.github.io', 'appindicatorsupport@rgcjonas.gmail.com', 'dash-to-panel@jderose9.github.com', 'blur-my-shell@aunetx', 'arcmenu@arcmenu.com']
 favorite-apps=['org.gnome.Nautilus.desktop', 'org.gnome.Ptyxis.desktop', 'chromium-browser.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.TextEditor.desktop', 'org.gnome.Software.desktop', 'org.gnome.Settings.desktop']
 last-selected-power-profile='performance'
-welcome-dialog-last-shown-version='49.4'
 
 [org/gnome/shell/app-switcher]
 current-workspace-only=false

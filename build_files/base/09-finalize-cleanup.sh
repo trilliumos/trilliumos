@@ -1,6 +1,15 @@
 #!/usr/bin/bash
 
+set -xeuo pipefail
+
 #### Final configurations
+
+depmod -a "$(ls -1 /lib/modules/ | tail -1)"
+
+# Generate initramfs image
+KERNEL_SUFFIX=""
+QUALIFIED_KERNEL="$(rpm -qa | grep -P 'kernel-(|'"$KERNEL_SUFFIX"'-)(\d+\.\d+\.\d+)' | sed -E 's/kernel-(|'"$KERNEL_SUFFIX"'-)//' | tail -n 1)"
+/usr/bin/dracut --no-hostonly --kver "$QUALIFIED_KERNEL" --reproducible --zstd -v --add ostree -f "/lib/modules/$QUALIFIED_KERNEL/initramfs.img"
 
 # Disable RHEL flatpak repo
 flatpak remote-delete rhel
@@ -23,6 +32,11 @@ sed -i 's|^DefaultZone=.*|DefaultZone=FedoraWorkstation|g' /etc/firewalld/firewa
 sed -i 's|^IPv6_rpfilter=.*|IPv6_rpfilter=loose|g' /etc/firewalld/firewalld.conf
 grep -F -e "DefaultZone=FedoraWorkstation" /etc/firewalld/firewalld.conf
 grep -F -e "IPv6_rpfilter=loose" /etc/firewalld/firewalld.conf
+
+# Configure automatic updates policy
+sed -i 's/#AutomaticUpdatePolicy.*/AutomaticUpdatePolicy=stage/' /etc/rpm-ostreed.conf
+sed -i 's/#LockLayering.*/LockLayering=true/' /etc/rpm-ostreed.conf
+sed -i 's|ExecStart=/usr/bin/bootc upgrade --apply --quiet|ExecStart=/usr/bin/bootc upgrade --quiet|' /usr/lib/systemd/system/bootc-fetch-apply-updates.service
 
 # System services
 systemctl enable smb nmb

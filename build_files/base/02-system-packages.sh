@@ -1,29 +1,31 @@
 #!/usr/bin/bash
 
+set -eoux pipefail
+
 ARCH=$(uname -m)
 
 # Install required packages for trilliumOS image
 dnf group install -y \
     "Server with GUI" \
-    "Dial-up Networking Support" \
-    "Hardware Support" \
-    "Anaconda tools" \
-    "Core" \
-    "Fonts" \
-    "GNOME" \
     "Guest Agents" \
     "Guest Desktop Agents" \
     "System Tools" \
     "Graphical Administration Tools" \
-    "Input Methods" \
     "Multimedia" \
-    "Common NetworkManager submodules" \
-    "Standard" \
     "Virtualization Hypervisor" \
     "Container Management" \
-    "Printing Client" \
-    "Hardware Monitoring Utilities" \
     "Image based rpm-ostree support"
+    # "Dial-up Networking Support" \
+    # "Hardware Support" \
+    # "Anaconda tools" \
+    # "Core" \
+    # "Fonts" \
+    # "GNOME" \
+    # "Printing Client" \
+    # "Hardware Monitoring Utilities" \
+    # "Input Methods" \
+    # "Common NetworkManager submodules" \
+    # "Standard"
 
 dnf install -y \
     btrfs-progs \
